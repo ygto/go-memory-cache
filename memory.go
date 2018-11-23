@@ -1,8 +1,7 @@
-package main
+package memory
 
 import (
 	"sync"
-	"fmt"
 )
 
 type memoryCache struct {
@@ -21,12 +20,18 @@ func (c *memoryCache) Get(key string) (string, bool) {
 	val, ok := c.Data[key]
 	return val, ok
 }
+
+func (c *memoryCache) Del(key string) {
+	defer c.mux.Unlock()
+	c.mux.Lock()
+	delete(c.mux,key)
+}
 func NewCache() *memoryCache {
 	c := memoryCache{}
 	c.Data = make(map[string]string)
 	return &c
 }
-
+/*
 func main() {
 
 	c := NewCache()
@@ -54,4 +59,4 @@ func main() {
 		}(i)
 	}
 	wg.Wait()
-}
+}*/
