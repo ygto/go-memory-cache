@@ -24,7 +24,7 @@ func (c *memoryCache) Get(key string) (string, bool) {
 func (c *memoryCache) Del(key string) {
 	defer c.mux.Unlock()
 	c.mux.Lock()
-	delete(c.mux,key)
+	delete(c.Data,key)
 }
 func NewCache() *memoryCache {
 	c := memoryCache{}
